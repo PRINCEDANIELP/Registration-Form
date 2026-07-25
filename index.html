@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Registration Form </title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="bg-gradient-to-r from-fuchsia-500 to-cyan-500 ">
+  <div class="min-h-screen grid justify-center items-center sd ">
+    <div class="form-container  bg-white  border border-purple-400  rounded-2xl  w-2/2 p-4 ">
+
+      <h1 class="text-center font-bold text-purple-800 text-2xl mt-4  mr-10 ml-10 mb-3"> Registration Form</h1>
+
+      <form id="registrationForm" class=" container p-1  ">
+        <div class="container grid grid-cols-1">
+          <label class="mt-2">Name</label>
+          <input type="text" id="name" placeholder="Enter your name"
+            class="  mt-2 pl-2 border rounded  border-purple-400 outline-none">
+          <div id="nameError" class="error text-red-600"></div>
+        </div>
+        <div class="container grid grid-cols-1">
+          <label class="mt-2">Email</label>
+          <input type="text" id="email" placeholder="Enter your email "
+            class=" mt-2 pl-2 border rounded  border-purple-400 outline-none placeholder">
+          <div id="emailError" class="error text-red-600 "></div>
+        </div>
+        <div class="container grid grid-cols-1 ">
+          <label class="mt-2">Password</label>
+          <input type="password" id="password" placeholder="Enter your password"
+            class=" mt-2 pl-2 border rounded  border-purple-400 outline-none">
+          <div id="passwordError" class="error text-red-600"></div>
+        </div>
+        <div class="container grid grid-cols-1  disabled:cursor-not-allowed">
+          <button type="submit" id="submitBtn" disabled
+            class="container bg-purple-600 text-white p-2 rounded-lg  hover:bg-green-600 disabled:bg-gray-400 mt-7 mb-3 disabled:cursor-not-allowed">
+            Register
+          </button>
+
+        </div>
+      </form>
+
+    </div>
+  </div>
+  <script>
+    let nameInput = document.getElementById("name")
+    let emailInput = document.getElementById("email")
+    let passwordInput = document.getElementById("password")
+
+    let nameError = document.getElementById("nameError")
+    let emailError = document.getElementById("emailError")
+    let passwordError = document.getElementById("passwordError")
+
+    let submitBtn = document.getElementById("submitBtn")
+    let form = document.getElementById("registrationForm")
+    function validateName() {
+      if (nameInput.value.trim() === "") {
+        nameError.textContent = "Name is required"
+        return false;
+      } else {
+        nameError.textContent = ""
+        return true
+      }
+    }
+    function validateEmail() {
+      let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (emailInput.value.trim() === "") {
+        emailError.textContent = "Email is required"
+        return false
+      }
+
+      if (!emailPattern.test(emailInput.value)) {
+        emailError.textContent = "Enter a valid email address"
+        return false;
+      }
+      else {
+       emailError.textContent = ""
+        return true;
+      }
+
+    }
+
+    function validatePassword() {
+      if (passwordInput.value.length < 6) {
+        passwordError.textContent =
+          "Password must be at least 6 characters"
+        return false;
+      } else {
+        passwordError.textContent = ""
+        return true;
+      }
+    }
+
+    function checkForm() {
+      let nameValid = validateName()
+      let emailValid = validateEmail()
+      let passwordValid = validatePassword()
+
+      submitBtn.disabled = 
+      !(
+        nameValid &&
+        emailValid &&
+        passwordValid
+      )
+    }
+
+
+    nameInput.addEventListener("input", checkForm)
+    emailInput.addEventListener("input", checkForm)
+    passwordInput.addEventListener("input", checkForm)
+    form.addEventListener("submit", function () {
+      if (
+        validateName() &&
+        validateEmail() &&
+        validatePassword()
+      ) {
+        alert("Registration successful!")
+      }
+    })
+  </script>
+</body>
+
+</html>
